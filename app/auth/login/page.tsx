@@ -2,133 +2,102 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Field, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { signIn } from '../actions';
-import { TrendingUp, Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { Eye, EyeOff, AlertCircle } from 'lucide-react';
 
 export default function LoginPage() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [showPw, setShowPw]   = useState(false);
+  const [error, setError]     = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(formData: FormData) {
-    setIsLoading(true);
+    setLoading(true);
     setError(null);
-    
     const result = await signIn(formData);
-    
-    if (result?.error) {
-      setError(result.error);
-      setIsLoading(false);
-    }
+    if (result?.error) { setError(result.error); setLoading(false); }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md">
-        {/* 로고 */}
-        <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 border border-primary/20">
-            <TrendingUp className="w-7 h-7 text-primary" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-foreground">NEXUS</h1>
-            <p className="text-xs text-muted-foreground">Trading Platform</p>
-          </div>
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+      <div className="w-full max-w-[360px]">
+
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <h1 className="text-[22px] font-semibold tracking-tight text-foreground">MOTIVEX</h1>
+          <p className="text-[13px] text-muted-foreground mt-1">계정에 로그인</p>
         </div>
 
-        <Card className="border-border/50 bg-card/50 backdrop-blur">
-          <CardHeader className="text-center pb-2">
-            <CardTitle className="text-xl">로그인</CardTitle>
-            <CardDescription>계정에 로그인하여 거래를 시작하세요</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form action={handleSubmit} className="space-y-4">
-              {error && (
-                <div className="flex items-center gap-2 p-3 text-sm text-loss bg-loss/10 border border-loss/20 rounded-lg">
-                  <AlertCircle className="w-4 h-4 shrink-0" />
-                  <span>{error}</span>
+        {/* Card */}
+        <div className="bg-white rounded-2xl border border-border card-shadow p-6">
+          <form action={handleSubmit} className="space-y-4">
+            {error && (
+              <div className="flex items-start gap-2.5 p-3 bg-loss text-loss rounded-xl text-[13px]">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                <span>{error}</span>
+              </div>
+            )}
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-[13px] font-medium text-foreground mb-1.5">이메일</label>
+                <Input
+                  name="email"
+                  type="email"
+                  placeholder="name@example.com"
+                  autoComplete="email"
+                  required
+                  className="h-10 text-[14px] bg-muted/50 border-border/60 rounded-xl focus:bg-white"
+                />
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-[13px] font-medium text-foreground">비밀번호</label>
+                  <Link
+                    href="/auth/forgot-password"
+                    className="text-[12px] text-primary hover:underline"
+                  >
+                    비밀번호 찾기
+                  </Link>
                 </div>
-              )}
-              
-              <FieldGroup>
-                <Field>
-                  <FieldLabel htmlFor="email">이메일</FieldLabel>
+                <div className="relative">
                   <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="your@email.com"
+                    name="password"
+                    type={showPw ? 'text' : 'password'}
+                    placeholder="비밀번호 입력"
+                    autoComplete="current-password"
                     required
-                    autoComplete="email"
-                    className="bg-input/50"
+                    className="h-10 text-[14px] bg-muted/50 border-border/60 rounded-xl focus:bg-white pr-10"
                   />
-                </Field>
-                
-                <Field>
-                  <div className="flex items-center justify-between">
-                    <FieldLabel htmlFor="password">비밀번호</FieldLabel>
-                    <Link 
-                      href="/auth/reset-password" 
-                      className="text-xs text-primary hover:underline"
-                    >
-                      비밀번호 찾기
-                    </Link>
-                  </div>
-                  <div className="relative">
-                    <Input
-                      id="password"
-                      name="password"
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder="••••••••"
-                      required
-                      autoComplete="current-password"
-                      className="bg-input/50 pr-10"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    >
-                      {showPassword ? (
-                        <EyeOff className="w-4 h-4" />
-                      ) : (
-                        <Eye className="w-4 h-4" />
-                      )}
-                    </button>
-                  </div>
-                </Field>
-              </FieldGroup>
-              
-              <Button 
-                type="submit" 
-                className="w-full" 
-                disabled={isLoading}
-              >
-                {isLoading ? '로그인 중...' : '로그인'}
-              </Button>
-            </form>
-            
-            <div className="mt-6 text-center text-sm text-muted-foreground">
-              계정이 없으신가요?{' '}
-              <Link href="/auth/signup" className="text-primary hover:underline font-medium">
-                회원가입
-              </Link>
+                  <button
+                    type="button"
+                    onClick={() => setShowPw(!showPw)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showPw ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+              </div>
             </div>
-          </CardContent>
-        </Card>
-        
-        <p className="mt-6 text-center text-xs text-muted-foreground">
-          로그인함으로써{' '}
-          <Link href="/terms" className="underline hover:text-foreground">이용약관</Link>
-          {' '}및{' '}
-          <Link href="/privacy" className="underline hover:text-foreground">개인정보처리방침</Link>
-          에 동의합니다.
+
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full h-10 text-[14px] font-medium rounded-xl bg-primary hover:bg-primary/90 text-white transition-colors"
+            >
+              {loading ? '로그인 중...' : '로그인'}
+            </Button>
+          </form>
+        </div>
+
+        {/* Footer */}
+        <p className="text-center text-[13px] text-muted-foreground mt-5">
+          계정이 없으신가요?{' '}
+          <Link href="/auth/signup" className="text-primary font-medium hover:underline">
+            회원가입
+          </Link>
         </p>
       </div>
     </div>
