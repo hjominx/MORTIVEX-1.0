@@ -60,7 +60,7 @@ export default async function HomePage() {
 
       {/* 히어로 섹션 */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent" />
         <div className="container mx-auto px-4 py-24 md:py-32">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-sm text-primary mb-6">
