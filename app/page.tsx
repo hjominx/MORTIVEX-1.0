@@ -11,346 +11,314 @@ import {
   BarChart3, 
   Wallet,
   ArrowRight,
-  CheckCircle2
+  CheckCircle2,
+  Flame,
+  Sparkles,
+  Bolt,
+  Target
 } from 'lucide-react';
 
 export default async function HomePage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   
-  // 로그인된 사용자는 트레이딩 페이지로 리다이렉트
   if (user) {
     redirect('/trading');
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-hidden">
+      {/* 배경 그래디언트 이펙트 */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-primary/20 via-transparent to-transparent rounded-full blur-3xl opacity-40" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-br from-accent/20 via-transparent to-transparent rounded-full blur-3xl opacity-30" />
+        <div className="absolute top-1/2 right-0 w-96 h-96 bg-gradient-to-br from-secondary/10 via-transparent to-transparent rounded-full blur-3xl opacity-20" />
+      </div>
+
       {/* 헤더 */}
-      <header className="border-b border-border/50 bg-card/30 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-border/30 backdrop-glow sticky top-0 z-50 transition-all duration-300">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-primary/10 border border-primary/20">
-              <TrendingUp className="w-5 h-5 text-primary" />
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-primary p-2 group-hover:glow-primary transition-all duration-300">
+              <TrendingUp className="w-6 h-6 text-background" />
             </div>
-            <span className="font-bold text-xl">NEXUS</span>
+            <span className="font-bold text-xl bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">NEXUS</span>
           </Link>
           
-          <nav className="hidden md:flex items-center gap-6">
-            <Link href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              기능
-            </Link>
-            <Link href="#markets" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              시장
-            </Link>
-            <Link href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              수수료
-            </Link>
+          <nav className="hidden md:flex items-center gap-8">
+            {['기능', '시장', '수수료'].map((item) => (
+              <Link key={item} href={`#${item}`} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-300 relative group">
+                {item}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300" />
+              </Link>
+            ))}
           </nav>
           
           <div className="flex items-center gap-3">
             <Link href="/auth/login">
-              <Button variant="ghost" size="sm">로그인</Button>
+              <Button variant="ghost" size="sm" className="hover:bg-primary/10">로그인</Button>
             </Link>
             <Link href="/auth/signup">
-              <Button size="sm">시작하기</Button>
+              <Button size="sm" className="bg-gradient-primary hover:opacity-90 transition-opacity">시작하기</Button>
             </Link>
           </div>
         </div>
       </header>
 
       {/* 히어로 섹션 */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent" />
-        <div className="container mx-auto px-4 py-24 md:py-32">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-sm text-primary mb-6">
-              <Zap className="w-4 h-4" />
-              밀리초 단위 실시간 시세
+      <section className="relative overflow-hidden pt-20 pb-32">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto text-center slide-in-up">
+            {/* 배지 */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm mb-8 group hover:border-primary/60 transition-all duration-300">
+              <Flame className="w-4 h-4 text-primary animate-pulse" />
+              <span className="text-sm font-medium text-primary">밀리초 단위 실시간 시세</span>
+              <Sparkles className="w-4 h-4 text-accent" />
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-balance">
-              글로벌 자산을
-              <br />
-              <span className="text-primary">하나의 플랫폼</span>에서
+            {/* 메인 타이틀 */}
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tight">
+              <span className="block text-foreground">글로벌 자산을</span>
+              <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent py-2">하나의 플랫폼에서</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-pretty">
-              한국주식, 미국주식, 암호화폐, 옵션까지.
-              전문 트레이더를 위한 차세대 HTS 웹 플랫폼으로
-              더 빠르고, 더 스마트하게 거래하세요.
+            {/* 서브 타이틀 */}
+            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-3xl mx-auto leading-relaxed">
+              한국주식, 미국주식, 암호화폐, 옵션까지.<br />
+              <span className="text-foreground font-medium">전문 트레이더를 위한 차세대 HTS</span>로 더 빠르고, 더 스마트하게 거래하세요.
             </p>
             
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            {/* CTA 버튼 */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
               <Link href="/auth/signup">
-                <Button size="lg" className="gap-2 text-base h-12 px-8">
+                <Button size="lg" className="gap-2 text-base h-13 px-8 bg-gradient-primary hover:opacity-90 transition-all duration-300 glow-primary">
                   무료로 시작하기
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
               <Link href="/auth/login">
-                <Button variant="outline" size="lg" className="text-base h-12 px-8">
+                <Button variant="outline" size="lg" className="text-base h-13 px-8 border-primary/30 hover:border-primary/60 hover:bg-primary/5 transition-all duration-300">
                   데모 체험하기
                 </Button>
               </Link>
             </div>
             
             {/* 신뢰 지표 */}
-            <div className="flex items-center justify-center gap-8 mt-12 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-gain" />
-                <span>금융위 등록</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-gain" />
-                <span>ISMS 인증</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4 text-gain" />
-                <span>99.9% 가동률</span>
-              </div>
+            <div className="flex flex-wrap items-center justify-center gap-6 md:gap-12 text-sm">
+              {[
+                { icon: Shield, text: '금융위 등록' },
+                { icon: CheckCircle2, text: 'ISMS 인증' },
+                { icon: Bolt, text: '99.9% 가동률' }
+              ].map((item) => (
+                <div key={item.text} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/20 border border-border/30 hover:border-primary/30 transition-colors duration-300">
+                  <item.icon className="w-4 h-4 text-gain" />
+                  <span className="text-muted-foreground group-hover:text-foreground transition-colors">{item.text}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
       {/* 지원 시장 */}
-      <section id="markets" className="border-y border-border/50 bg-muted/20">
-        <div className="container mx-auto px-4 py-16">
-          <h2 className="text-2xl font-bold text-center mb-12">지원 시장</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <MarketCard 
-              icon={<span className="text-2xl">🇰🇷</span>}
-              title="한국 주식"
-              description="KOSPI, KOSDAQ 전 종목"
-            />
-            <MarketCard 
-              icon={<span className="text-2xl">🇺🇸</span>}
-              title="미국 주식"
-              description="NYSE, NASDAQ"
-            />
-            <MarketCard 
-              icon={<span className="text-2xl">₿</span>}
-              title="암호화폐"
-              description="BTC, ETH 외 100+ 코인"
-            />
-            <MarketCard 
-              icon={<span className="text-2xl">📊</span>}
-              title="옵션"
-              description="전 종목 옵션 거래"
-            />
+      <section id="시장" className="py-24 relative">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">지원 시장</h2>
+            <p className="text-muted-foreground text-lg">주요 금융 시장에 한 번에 접근하세요</p>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {[
+              { emoji: '🇰🇷', title: '한국 주식', desc: 'KOSPI, KOSDAQ' },
+              { emoji: '🇺🇸', title: '미국 주식', desc: 'NYSE, NASDAQ' },
+              { emoji: '₿', title: '암호화폐', desc: '100+ 코인' },
+              { emoji: '📊', title: '옵션', desc: '전 종목 옵션' }
+            ].map((market) => (
+              <div key={market.title} className="group relative overflow-hidden rounded-xl border border-border/30 bg-card/30 p-6 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 cursor-pointer">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative z-10 text-center">
+                  <div className="text-5xl mb-3 group-hover:scale-110 transition-transform duration-300">{market.emoji}</div>
+                  <h3 className="font-semibold text-foreground mb-1">{market.title}</h3>
+                  <p className="text-xs text-muted-foreground">{market.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* 기능 섹션 */}
-      <section id="features" className="container mx-auto px-4 py-24">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold mb-4">전문가를 위한 기능</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            기관 수준의 트레이딩 도구를 개인 투자자에게 제공합니다
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-6">
-          <FeatureCard 
-            icon={<Zap className="w-6 h-6" />}
-            title="초저지연 시세"
-            description="밀리초 단위 실시간 시세와 호가 데이터로 빠른 의사결정을 지원합니다."
-          />
-          <FeatureCard 
-            icon={<BarChart3 className="w-6 h-6" />}
-            title="고급 차트"
-            description="100+ 기술적 지표와 다양한 차트 유형으로 전문적인 분석이 가능합니다."
-          />
-          <FeatureCard 
-            icon={<Globe className="w-6 h-6" />}
-            title="글로벌 접근"
-            description="하나의 계좌로 한국, 미국, 암호화폐 시장에 동시 접근하세요."
-          />
-          <FeatureCard 
-            icon={<Shield className="w-6 h-6" />}
-            title="보안 강화"
-            description="2FA 인증, 암호화 통신, 콜드월렛 보관으로 자산을 안전하게 보호합니다."
-          />
-          <FeatureCard 
-            icon={<Wallet className="w-6 h-6" />}
-            title="통합 포트폴리오"
-            description="모든 자산을 한눈에 관리하고 실시간 손익을 확인하세요."
-          />
-          <FeatureCard 
-            icon={<TrendingUp className="w-6 h-6" />}
-            title="AI 분석"
-            description="AI 기반 뉴스 분석과 시장 인사이트로 더 나은 투자 결정을 내리세요."
-          />
+      <section id="기능" className="py-24 relative">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">전문가를 위한 기능</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              기관 수준의 트레이딩 도구를 개인 투자자에게 제공합니다
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { 
+                icon: Zap, 
+                title: '초저지연 시세', 
+                desc: '밀리초 단위 실시간 시세와 호가 데이터로 빠른 의사결정을 지원합니다.',
+                gradient: 'from-primary/20 to-primary/5'
+              },
+              { 
+                icon: BarChart3, 
+                title: '고급 차트', 
+                desc: '100+ 기술적 지표와 다양한 차트 유형으로 전문적인 분석이 가능합니다.',
+                gradient: 'from-secondary/20 to-secondary/5'
+              },
+              { 
+                icon: Globe, 
+                title: '글로벌 접근', 
+                desc: '하나의 계좌로 한국, 미국, 암호화폐 시장에 동시 접근하세요.',
+                gradient: 'from-accent/20 to-accent/5'
+              },
+              { 
+                icon: Shield, 
+                title: '보안 강화', 
+                desc: '2FA 인증, 암호화 통신, 콜드월렛 보관으로 자산을 안전하게 보호합니다.',
+                gradient: 'from-gain/20 to-gain/5'
+              },
+              { 
+                icon: Wallet, 
+                title: '통합 포트폴리오', 
+                desc: '모든 자산을 한눈에 관리하고 실시간 손익을 확인하세요.',
+                gradient: 'from-warning/20 to-warning/5'
+              },
+              { 
+                icon: Target, 
+                title: 'AI 분석', 
+                desc: 'AI 기반 뉴스 분석과 시장 인사이트로 더 나은 투자 결정을 내리세요.',
+                gradient: 'from-primary/20 to-accent/20'
+              }
+            ].map((feature, idx) => {
+              const IconComponent = feature.icon;
+              return (
+                <div 
+                  key={idx}
+                  className={`group relative overflow-hidden rounded-xl border border-border/30 bg-gradient-to-br ${feature.gradient} p-8 hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/20`}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-foreground/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative z-10">
+                    <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-primary via-accent to-primary p-3 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
+                      <IconComponent className="w-7 h-7 text-background" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-foreground mb-3">{feature.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed">{feature.desc}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* 수수료 섹션 */}
-      <section id="pricing" className="border-t border-border/50 bg-muted/20">
-        <div className="container mx-auto px-4 py-24">
+      <section id="수수료" className="py-24 relative">
+        <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">투명한 수수료</h2>
-            <p className="text-muted-foreground">
-              거래량이 늘어날수록 수수료가 낮아집니다
-            </p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">투명한 수수료</h2>
+            <p className="text-muted-foreground text-lg">거래량이 늘어날수록 수수료가 낮아집니다</p>
           </div>
           
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-4 gap-4 text-sm mb-4 px-4">
-              <span className="font-medium">시장</span>
-              <span className="font-medium text-center">Basic</span>
-              <span className="font-medium text-center">Gold</span>
-              <span className="font-medium text-center">VIP</span>
-            </div>
-            
-            <div className="space-y-2">
-              <PricingRow market="한국 주식" basic="0.015%" gold="0.01%" vip="0.005%" />
-              <PricingRow market="미국 주식" basic="0.25%" gold="0.15%" vip="0.05%" />
-              <PricingRow market="암호화폐" basic="0.1%" gold="0.06%" vip="0.02%" />
-              <PricingRow market="옵션" basic="0.3%" gold="0.2%" vip="0.1%" />
+          <div className="max-w-5xl mx-auto overflow-x-auto">
+            <div className="inline-block w-full min-w-fit">
+              <div className="grid gap-4">
+                {[
+                  { market: '한국 주식', basic: '0.015%', gold: '0.01%', vip: '0.005%' },
+                  { market: '미국 주식', basic: '0.25%', gold: '0.15%', vip: '0.05%' },
+                  { market: '암호화폐', basic: '0.1%', gold: '0.06%', vip: '0.02%' },
+                  { market: '옵션', basic: '0.3%', gold: '0.2%', vip: '0.1%' }
+                ].map((row, idx) => (
+                  <div 
+                    key={idx}
+                    className="group relative overflow-hidden rounded-lg border border-border/30 bg-card/40 grid grid-cols-4 gap-4 p-6 hover:border-primary/50 hover:bg-card/60 transition-all duration-300"
+                  >
+                    <div className="font-medium text-foreground">{row.market}</div>
+                    <div className="text-center text-muted-foreground group-hover:text-foreground transition-colors">{row.basic}</div>
+                    <div className="text-center text-primary font-medium group-hover:text-accent transition-colors">{row.gold}</div>
+                    <div className="text-center text-gain font-semibold group-hover:scale-105 transition-transform">{row.vip}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA 섹션 */}
-      <section className="container mx-auto px-4 py-24">
-        <Card className="bg-primary/5 border-primary/20">
-          <CardContent className="py-12 text-center">
-            <h2 className="text-3xl font-bold mb-4">지금 시작하세요</h2>
-            <p className="text-muted-foreground mb-8 max-w-xl mx-auto">
-              5분 만에 계좌를 개설하고 글로벌 시장에 접근하세요.
-              첫 거래 수수료는 무료입니다.
-            </p>
-            <Link href="/auth/signup">
-              <Button size="lg" className="gap-2 text-base h-12 px-8">
-                무료 계좌 개설
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
-          </CardContent>
-        </Card>
+      <section className="py-24 relative">
+        <div className="container mx-auto px-4">
+          <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/5 p-12 md:p-16 text-center glow-primary">
+            <div className="absolute inset-0 bg-gradient-mesh opacity-20" />
+            <div className="relative z-10">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">지금 시작하세요</h2>
+              <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+                5분 만에 계좌를 개설하고 글로벌 시장에 접근하세요.<br />
+                <span className="text-foreground font-medium">첫 거래 수수료는 무료입니다.</span>
+              </p>
+              <Link href="/auth/signup">
+                <Button size="lg" className="gap-2 text-base h-13 px-10 bg-gradient-primary hover:opacity-90 transition-all duration-300">
+                  무료 계좌 개설
+                  <ArrowRight className="w-5 h-5" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* 푸터 */}
-      <footer className="border-t border-border/50 bg-card/30">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
+      <footer className="border-t border-border/30 bg-muted/10 backdrop-blur-sm">
+        <div className="container mx-auto px-4 py-16">
+          <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 border border-primary/20">
-                  <TrendingUp className="w-4 h-4 text-primary" />
+              <div className="flex items-center gap-3 mb-6">
+                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-primary p-2">
+                  <TrendingUp className="w-6 h-6 text-background" />
                 </div>
-                <span className="font-bold">NEXUS</span>
+                <span className="font-bold text-lg">NEXUS</span>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 차세대 글로벌 트레이딩 플랫폼
               </p>
             </div>
             
-            <div>
-              <h4 className="font-medium mb-4">서비스</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/trading" className="hover:text-foreground">트레이딩</Link></li>
-                <li><Link href="#" className="hover:text-foreground">API</Link></li>
-                <li><Link href="#" className="hover:text-foreground">모바일 앱</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-medium mb-4">지원</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="#" className="hover:text-foreground">고객센터</Link></li>
-                <li><Link href="#" className="hover:text-foreground">FAQ</Link></li>
-                <li><Link href="#" className="hover:text-foreground">가이드</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-medium mb-4">법적 고지</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/terms" className="hover:text-foreground">이용약관</Link></li>
-                <li><Link href="/privacy" className="hover:text-foreground">개인정보처리방침</Link></li>
-                <li><Link href="/risk" className="hover:text-foreground">투자위험고지</Link></li>
-              </ul>
-            </div>
+            {[
+              { title: '서비스', links: ['트레이딩', 'API', '모바일 앱'] },
+              { title: '지원', links: ['고객센터', 'FAQ', '가이드'] },
+              { title: '법적 고지', links: ['이용약관', '개인정보처리방침', '투자위험고지'] }
+            ].map((section) => (
+              <div key={section.title}>
+                <h4 className="font-semibold mb-6 text-foreground">{section.title}</h4>
+                <ul className="space-y-3">
+                  {section.links.map((link) => (
+                    <li key={link}>
+                      <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
+                        {link}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
           
-          <div className="border-t border-border/50 mt-12 pt-8 text-center text-sm text-muted-foreground">
+          <div className="border-t border-border/30 pt-12 text-center text-sm text-muted-foreground space-y-2">
             <p>
               투자에는 원금 손실의 위험이 있습니다. 투자 결정은 본인의 책임하에 이루어져야 합니다.
             </p>
-            <p className="mt-2">
+            <p className="pt-4">
               &copy; 2024 NEXUS Trading. All rights reserved.
             </p>
           </div>
         </div>
       </footer>
     </div>
-  );
-}
-
-function MarketCard({ 
-  icon, 
-  title, 
-  description 
-}: { 
-  icon: React.ReactNode; 
-  title: string; 
-  description: string;
-}) {
-  return (
-    <Card className="bg-card/50 border-border/50 text-center">
-      <CardContent className="pt-6">
-        <div className="mb-3">{icon}</div>
-        <h3 className="font-semibold mb-1">{title}</h3>
-        <p className="text-sm text-muted-foreground">{description}</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function FeatureCard({ 
-  icon, 
-  title, 
-  description 
-}: { 
-  icon: React.ReactNode; 
-  title: string; 
-  description: string;
-}) {
-  return (
-    <Card className="bg-card/50 border-border/50">
-      <CardContent className="pt-6">
-        <div className="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary mb-4">
-          {icon}
-        </div>
-        <h3 className="font-semibold mb-2">{title}</h3>
-        <p className="text-sm text-muted-foreground">{description}</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function PricingRow({ 
-  market, 
-  basic, 
-  gold, 
-  vip 
-}: { 
-  market: string; 
-  basic: string; 
-  gold: string; 
-  vip: string;
-}) {
-  return (
-    <Card className="bg-card/50 border-border/50">
-      <CardContent className="py-4 grid grid-cols-4 gap-4 items-center">
-        <span className="font-medium">{market}</span>
-        <span className="text-center text-muted-foreground">{basic}</span>
-        <span className="text-center text-primary">{gold}</span>
-        <span className="text-center text-gain font-medium">{vip}</span>
-      </CardContent>
-    </Card>
   );
 }
