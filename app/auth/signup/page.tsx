@@ -32,10 +32,10 @@ export default function SignUpPage() {
 
   return (
     <div className="min-h-screen bg-background overflow-hidden relative">
-      {/* 배경 그래디언트 이펙트 */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-gradient-to-br from-secondary/20 via-transparent to-transparent rounded-full blur-3xl opacity-40" />
-        <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-accent/20 via-transparent to-transparent rounded-full blur-3xl opacity-30" />
+      {/* 부드러운 배경 그래디언트 이펙트 */}
+      <div className="fixed inset-0 -z-10 pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-secondary/10 via-transparent to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-1/3 -left-32 w-72 h-72 bg-gradient-to-br from-primary/8 via-transparent to-transparent rounded-full blur-3xl" />
       </div>
 
       <div className="flex items-center justify-center min-h-screen p-4">
@@ -44,10 +44,10 @@ export default function SignUpPage() {
           {/* 로고 */}
           <div className="text-center mb-10">
             <Link href="/" className="inline-flex items-center gap-3 mb-8 group">
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-primary p-2.5 group-hover:glow-primary transition-all duration-300">
-                <TrendingUp className="w-7 h-7 text-background" />
+              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-primary p-2.5 group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300">
+                <TrendingUp className="w-7 h-7 text-white" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">NEXUS</span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">MOTIVEX</span>
             </Link>
             
             <h1 className="text-3xl font-bold text-foreground mb-2">계정 만들기</h1>
@@ -55,14 +55,11 @@ export default function SignUpPage() {
           </div>
 
           {/* 회원가입 카드 */}
-          <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-card/50 via-card/30 to-card/20 backdrop-blur-xl p-8">
-            {/* 배경 그래디언트 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-50" />
-            
+          <div className="relative overflow-hidden rounded-2xl border border-primary/20 bg-white shadow-lg p-8">
             <form action={handleSubmit} className="relative z-10 space-y-5">
               {/* 에러 메시지 */}
               {error && (
-                <div className="flex items-start gap-3 p-4 rounded-xl bg-loss/20 border border-loss/30 text-loss text-sm animate-pulse">
+                <div className="flex items-start gap-3 p-4 rounded-xl bg-loss/10 border border-loss/20 text-loss text-sm animate-pulse">
                   <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
                   <span className="font-medium">{error}</span>
                 </div>
@@ -76,7 +73,7 @@ export default function SignUpPage() {
                   <Input
                     name="fullName"
                     placeholder="홍길동"
-                    className="h-11 text-sm bg-input/50 border-border/50 rounded-lg focus:border-primary/50 focus:bg-input transition-all duration-300 placeholder:text-muted-foreground/50"
+                    className="h-11 text-sm bg-muted border-border rounded-lg focus:border-primary/50 focus:bg-background transition-all duration-300 placeholder:text-muted-foreground/50"
                   />
                 </div>
 
@@ -88,7 +85,7 @@ export default function SignUpPage() {
                     type="email"
                     placeholder="name@example.com"
                     required
-                    className="h-11 text-sm bg-input/50 border-border/50 rounded-lg focus:border-primary/50 focus:bg-input transition-all duration-300 placeholder:text-muted-foreground/50"
+                    className="h-11 text-sm bg-muted border-border rounded-lg focus:border-primary/50 focus:bg-background transition-all duration-300 placeholder:text-muted-foreground/50"
                   />
                 </div>
 
@@ -99,7 +96,7 @@ export default function SignUpPage() {
                     name="phone"
                     type="tel"
                     placeholder="010-0000-0000"
-                    className="h-11 text-sm bg-input/50 border-border/50 rounded-lg focus:border-primary/50 focus:bg-input transition-all duration-300 placeholder:text-muted-foreground/50"
+                    className="h-11 text-sm bg-muted border-border rounded-lg focus:border-primary/50 focus:bg-background transition-all duration-300 placeholder:text-muted-foreground/50"
                   />
                 </div>
 
@@ -114,7 +111,7 @@ export default function SignUpPage() {
                       value={pw}
                       onChange={(e) => setPw(e.target.value)}
                       required
-                      className="h-11 text-sm bg-input/50 border-border/50 rounded-lg focus:border-primary/50 focus:bg-input transition-all duration-300 pr-11 placeholder:text-muted-foreground/50"
+                      className="h-11 text-sm bg-muted border-border rounded-lg focus:border-primary/50 focus:bg-background transition-all duration-300 pr-11 placeholder:text-muted-foreground/50"
                     />
                     <button
                       type="button"
@@ -163,7 +160,7 @@ export default function SignUpPage() {
                               }`}
                             >
                               {c.ok && (
-                                <Check className="w-2.5 h-2.5 text-background" />
+                                <Check className="w-2.5 h-2.5 text-white" />
                               )}
                             </div>
                             {c.label}
@@ -182,7 +179,7 @@ export default function SignUpPage() {
                     type="password"
                     placeholder="비밀번호 재입력"
                     required
-                    className="h-11 text-sm bg-input/50 border-border/50 rounded-lg focus:border-primary/50 focus:bg-input transition-all duration-300 placeholder:text-muted-foreground/50"
+                    className="h-11 text-sm bg-muted border-border rounded-lg focus:border-primary/50 focus:bg-background transition-all duration-300 placeholder:text-muted-foreground/50"
                   />
                 </div>
               </div>
@@ -198,13 +195,13 @@ export default function SignUpPage() {
                   }`}
                 >
                   {agreed && (
-                    <Check className="w-3 h-3 text-background" />
+                    <Check className="w-3 h-3 text-white" />
                   )}
                 </div>
                 <input type="hidden" name="agreeTerms" value={agreed ? 'on' : ''} />
                 <span className="text-sm text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors">
-                  <Link href="/terms" className="text-primary font-medium hover:text-accent transition-colors">이용약관</Link> 및{' '}
-                  <Link href="/privacy" className="text-primary font-medium hover:text-accent transition-colors">개인정보처리방침</Link>에 동의합니다
+                  <Link href="/terms" className="text-primary font-medium hover:text-secondary transition-colors">이용약관</Link> 및{' '}
+                  <Link href="/privacy" className="text-primary font-medium hover:text-secondary transition-colors">개인정보처리방침</Link>에 동의합니다
                 </span>
               </label>
 
@@ -212,11 +209,11 @@ export default function SignUpPage() {
               <Button
                 type="submit"
                 disabled={loading || !strong || !agreed}
-                className="w-full h-11 text-base font-semibold rounded-lg bg-gradient-primary hover:opacity-90 transition-all duration-300 glow-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full h-11 text-base font-semibold rounded-lg bg-gradient-primary hover:shadow-lg hover:shadow-primary/30 text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>
-                    <div className="w-4 h-4 rounded-full border-2 border-background border-t-transparent animate-spin" />
+                    <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
                     처리 중...
                   </>
                 ) : (
@@ -232,7 +229,7 @@ export default function SignUpPage() {
           {/* 로그인 링크 */}
           <p className="text-center text-sm text-muted-foreground mt-8">
             이미 계정이 있으신가요?{' '}
-            <Link href="/auth/login" className="text-primary font-semibold hover:text-accent transition-colors duration-300">
+            <Link href="/auth/login" className="text-primary font-semibold hover:text-secondary transition-colors duration-300">
               로그인
             </Link>
           </p>

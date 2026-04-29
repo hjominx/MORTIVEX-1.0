@@ -3,78 +3,79 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* 프리미엄 그래디언트 테마 - 트렌디한 금융 플랫폼 */
+/* MOTIVEX 프리미엄 라이트 테마 - 밝고 고급스러운 금융 플랫폼 */
 :root {
-  /* 배경 - 더 깊고 세련된 그래디언트 */
-  --background: #0a0e27;
-  --foreground: #f5f7ff;
-  --card: #131a3f;
-  --card-foreground: #f5f7ff;
-  --popover: #1a2447;
-  --popover-foreground: #f5f7ff;
+  /* 배경 - 밝고 깔끔한 화이트 톤 */
+  --background: #fafbfc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #f8fafc;
+  --popover-foreground: #0f172a;
   
-  /* 프라이머리 - 생생한 시안-보라 그래디언트 */
-  --primary: #00d4ff;
-  --primary-dark: #0099ff;
-  --primary-foreground: #0a0e27;
+  /* 프라이머리 - 세련된 인디고 블루 */
+  --primary: #4f46e5;
+  --primary-light: #6366f1;
+  --primary-dark: #4338ca;
+  --primary-foreground: #ffffff;
   
-  /* 세컨더리 - 보라 톤 */
-  --secondary: #6366f1;
-  --secondary-foreground: #f5f7ff;
+  /* 세컨더리 - 소프트 퍼플 */
+  --secondary: #7c3aed;
+  --secondary-foreground: #ffffff;
   
-  /* 뮤테드 - 은은한 회색 */
-  --muted: #2a2f4f;
-  --muted-foreground: #9ca3af;
+  /* 뮤테드 - 밝은 그레이 */
+  --muted: #e2e8f0;
+  --muted-foreground: #64748b;
   
-  /* 악센트 - 핫핑크-마젠타 */
-  --accent: #ff006e;
-  --accent-foreground: #f5f7ff;
+  /* 악센트 - 따뜻한 오렌지 */
+  --accent: #f97316;
+  --accent-foreground: #ffffff;
   
   /* 위험 색상 */
-  --destructive: #ff3b30;
-  --destructive-foreground: #f5f7ff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
   
   /* 보더와 링 */
-  --border: #2a3f5f;
-  --input: #161d3f;
-  --ring: #00d4ff;
+  --border: #e2e8f0;
+  --input: #f1f5f9;
+  --ring: #4f46e5;
   
-  /* 트레이딩 색상 - 강렬한 톤 */
-  --gain: #10b981;
-  --gain-foreground: #f5f7ff;
-  --loss: #ef4444;
-  --loss-foreground: #f5f7ff;
-  --warning: #f59e0b;
-  --warning-foreground: #0a0e27;
+  /* 트레이딩 색상 - 생생한 톤 */
+  --gain: #16a34a;
+  --gain-foreground: #ffffff;
+  --loss: #dc2626;
+  --loss-foreground: #ffffff;
+  --warning: #ea580c;
+  --warning-foreground: #ffffff;
   
-  /* 차트 색상 - 구분이 잘되는 그래디언트 팔레트 */
-  --chart-1: #00d4ff;
-  --chart-2: #10b981;
-  --chart-3: #ef4444;
-  --chart-4: #f59e0b;
-  --chart-5: #8b5cf6;
-  --chart-candle-up: #10b981;
-  --chart-candle-down: #ef4444;
+  /* 차트 색상 */
+  --chart-1: #4f46e5;
+  --chart-2: #16a34a;
+  --chart-3: #dc2626;
+  --chart-4: #ea580c;
+  --chart-5: #7c3aed;
+  --chart-candle-up: #16a34a;
+  --chart-candle-down: #dc2626;
   
   /* 사이드바 */
-  --sidebar: #0a0e27;
-  --sidebar-foreground: #d1d5db;
-  --sidebar-primary: #00d4ff;
-  --sidebar-primary-foreground: #0a0e27;
-  --sidebar-accent: #2a3f5f;
-  --sidebar-accent-foreground: #00d4ff;
-  --sidebar-border: #2a3f5f;
-  --sidebar-ring: #00d4ff;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1e293b;
+  --sidebar-primary: #4f46e5;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f5f9;
+  --sidebar-accent-foreground: #4f46e5;
+  --sidebar-border: #e2e8f0;
+  --sidebar-ring: #4f46e5;
   
   /* 라디우스 */
   --radius: 0.75rem;
   
   /* 그래디언트 변수들 */
-  --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
-  --gradient-accent: linear-gradient(135deg, #ff006e 0%, #ff3b30 100%);
-  --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
-  --gradient-glow: radial-gradient(circle at center, rgba(0, 212, 255, 0.2) 0%, transparent 100%);
+  --gradient-primary: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --gradient-accent: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  --gradient-success: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  --gradient-warning: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  --gradient-glow: radial-gradient(circle at center, rgba(79, 70, 229, 0.15) 0%, transparent 100%);
 }
 
 @theme inline {
